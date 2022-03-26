@@ -65,13 +65,11 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // justifyContent: "center",
     backgroundColor: "#D6EAF8",
     paddingLeft: 10,
     paddingRight: 10,
   },
   header: {
-    // flex: 5,
     flex: 2,
     alignItems: "center",
     justifyContent: "flex-start",
