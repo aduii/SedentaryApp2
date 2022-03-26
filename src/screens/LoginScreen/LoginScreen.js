@@ -21,27 +21,43 @@ const LoginScreen = () => {
   const onForgotPasswordPressed = () => {
     console.warn("Forgot your password");
   };
+  const onRegisterPressed = () => {
+    console.warn("On Register");
+  };
 
   return (
     <SafeAreaView style={styles.root}>
-      <Image source={Logo} style={[styles.logo, { height: height * 0.3 }]} />
-      <CustomInput
-        value={username}
-        setValue={setUserName}
-        placeholder="Usuario"
-      />
-      <CustomInput
-        value={password}
-        setValue={setPassword}
-        placeholder="Contraseña"
-        secureTextEntry={true}
-      />
-      <CustomButton onPress={onLoginPressed} text="Ingresar" type="primary" />
-      <CustomButton
-        onPress={onForgotPasswordPressed}
-        text="¿Olvidaste tu contraseña?"
-        type="secondary"
-      />
+      <View style={styles.header}>
+        <Image
+          source={Logo}
+          style={[styles.header_logo, { height: height * 0.3 }]}
+        />
+        <Text style={styles.header_title}>Sedentary App</Text>
+      </View>
+      <View style={styles.login}>
+        <CustomInput
+          value={username}
+          setValue={setUserName}
+          placeholder="Correo electrónico"
+        />
+        <CustomInput
+          value={password}
+          setValue={setPassword}
+          placeholder="Contraseña"
+          secureTextEntry={true}
+        />
+        <CustomButton onPress={onLoginPressed} text="Ingresar" type="primary" />
+        <CustomButton
+          onPress={onForgotPasswordPressed}
+          text="¿Olvidaste tu contraseña?"
+          type="secondary"
+        />
+        <CustomButton
+          onPress={onRegisterPressed}
+          text="Registrarme Ahora"
+          type="secondary"
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -49,14 +65,29 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     backgroundColor: "#D6EAF8",
-
     paddingLeft: 10,
     paddingRight: 10,
   },
-  logo: {
+  header: {
+    // flex: 5,
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  login: {
+    flex: 1.5,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    alignContent: "flex-end",
+    paddingTop: 10,
+  },
+  header_title: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  header_logo: {
     width: "70%",
     maxWidth: 200,
     maxHeight: 200,
