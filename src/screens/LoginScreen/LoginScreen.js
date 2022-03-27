@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   header_title: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#051C60",
   },
   header_logo: {
     width: "70%",
