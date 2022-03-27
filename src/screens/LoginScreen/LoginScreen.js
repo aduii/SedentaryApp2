@@ -12,7 +12,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
 const LoginScreen = () => {
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { height } = useWindowDimensions();
   const onLoginPressed = () => {
@@ -36,8 +36,8 @@ const LoginScreen = () => {
       </View>
       <View style={styles.login}>
         <CustomInput
-          value={username}
-          setValue={setUserName}
+          value={email}
+          setValue={setEmail}
           placeholder="Correo electrónico"
         />
         <CustomInput

@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import DatePicker from "react-native-datepicker";
 import { StyleSheet } from "react-native";
 
-const CustomDatePicker = () => {
+const CustomDatePicker = ({ date, setDate }) => {
   let nowDate = new Date();
 
-  let output =
+  let strNowDate =
     String(nowDate.getDate()).padStart(2, "0") +
     "-" +
     String(nowDate.getMonth() + 1).padStart(2, "0") +
     "-" +
     nowDate.getFullYear();
 
-  const [date, setDate] = useState("");
   return (
     <DatePicker
       style={styles.datepicker}
@@ -21,7 +20,7 @@ const CustomDatePicker = () => {
       placeholder="Seleccione su fecha de nacimiento"
       format="DD-MM-YYYY"
       minDate="01-01-1960"
-      maxDate={output}
+      maxDate={strNowDate}
       confirmBtnText="Confirm"
       cancelBtnText="Cancel"
       showIcon={false}

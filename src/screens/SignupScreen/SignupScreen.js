@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  useWindowDimensions,
-  ScrollView,
-} from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
@@ -17,8 +10,10 @@ const SignupScreen = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [tall, setTall] = useState("");
   const [weight, setWeight] = useState("");
+  const [date, setDate] = useState("");
 
   const onCreateAccountPressed = () => {
     console.warn("On Create Account");
@@ -29,18 +24,21 @@ const SignupScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.register}>
           <Text style={styles.header_title}>Registro</Text>
+
           <CustomTitleInput textValue="Nombres Completos" />
           <CustomInput
             value={username}
             setValue={setUserName}
             placeholder="César Flores"
           />
+
           <CustomTitleInput textValue="Correo electrónico" />
           <CustomInput
             value={email}
             setValue={setEmail}
             placeholder="cesar.flores@upc.edu.pe"
           />
+
           <CustomTitleInput textValue="Contraseña" />
           <CustomInput
             value={password}
@@ -48,8 +46,16 @@ const SignupScreen = () => {
             placeholder="**************"
             secureTextEntry={true}
           />
+          <CustomTitleInput textValue="Repetir contraseña" />
+          <CustomInput
+            value={repeatPassword}
+            setValue={setRepeatPassword}
+            placeholder="**************"
+            secureTextEntry={true}
+          />
+
           <CustomTitleInput textValue="Fecha de nacimiento" />
-          <CustomDatePicker />
+          <CustomDatePicker date={date} setDate={setDate} />
 
           <CustomTitleInput textValue="Altura (metros)" />
           <CustomInput
@@ -67,6 +73,11 @@ const SignupScreen = () => {
             kbType="numeric"
           />
 
+          <Text style={styles.text}>
+            Al registrarse, confirma que acepta nuestros{" "}
+            <Text style={styles.link}>Términos de uso</Text> y{" "}
+            <Text style={styles.link}>Política de privacidad</Text>
+          </Text>
           <CustomButton
             onPress={onCreateAccountPressed}
             text="Registrarme"
@@ -97,6 +108,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#051C60",
     margin: 10,
+  },
+  text: {
+    color: "gray",
+    marginVertical: 10,
+  },
+  link: {
+    color: "#FDB075",
   },
 });
 

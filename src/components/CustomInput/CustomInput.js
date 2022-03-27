@@ -21,7 +21,6 @@ const CustomInput = ({
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
