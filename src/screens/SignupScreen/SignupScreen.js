@@ -1,10 +1,11 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
 import CustomDatePicker from "../../components/CustomDatePicker";
+import { Auth } from "aws-amplify";
 
 const SignupScreen = ({ navigation }) => {
   const [username, setUserName] = useState("");
@@ -15,8 +16,24 @@ const SignupScreen = ({ navigation }) => {
   const [weight, setWeight] = useState("");
   const [date, setDate] = useState("");
 
-  const onCreateAccountPressed = () => {
-    navigation.navigate("ConfirmEmail");
+  const onCreateAccountPressed = async () => {
+    // navigation.navigate("ConfirmEmail");
+    try {
+      const response = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          name: username,
+          birthdate: date,
+          "custom:tall": tall,
+          "custom:weight": weight,
+        },
+      });
+      Alert.alert("Falta 1 paso", "Verifique su correo electrónico");
+      navigation.navigate("ConfirmEmail");
+    } catch (e) {
+      Alert.alert("No se puede registrar", e.message);
+    }
   };
   const onLoginPressed = () => {
     navigation.navigate("Login");
@@ -125,5 +142,4 @@ const styles = StyleSheet.create({
     color: "#FDB075",
   },
 });
-
 export default SignupScreen;

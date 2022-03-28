@@ -4,20 +4,31 @@ import {
   StyleSheet,
   Image,
   useWindowDimensions,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../assets/images/logo_1.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import { Auth } from "aws-amplify";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { height } = useWindowDimensions();
-  const onLoginPressed = () => {
-    // console.warn("Login");
-    navigation.navigate("Home");
+
+  // const onLoginPressed = () => {
+  //   // console.warn("Login");
+  //   // navigation.navigate("Home");
+  // };
+  const onLoginPressed = async () => {
+    try {
+      const response = await Auth.signIn(email, password);
+      navigation.navigate("Home");
+    } catch (e) {
+      Alert.alert("Intente de nuevo", e.message);
+    }
   };
   const onForgotPasswordPressed = () => {
     navigation.navigate("ForgotPassword");

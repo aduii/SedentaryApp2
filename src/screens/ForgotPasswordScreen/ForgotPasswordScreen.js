@@ -1,15 +1,21 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
+import { Auth } from "aws-amplify";
 
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
 
-  const onSendPressed = () => {
-    navigation.navigate("NewPassword");
+  const onSendPressed = async () => {
+    try {
+      await Auth.forgotPassword(email);
+      navigation.navigate("NewPassword");
+    } catch (e) {
+      Alert.alert("Este correo no está registrado", e.message);
+    }
   };
   const onLoginPressed = () => {
     navigation.navigate("Login");

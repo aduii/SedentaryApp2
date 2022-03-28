@@ -1,16 +1,24 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
+import { Auth } from "aws-amplify";
 
 const NewPasswordScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const onSendPressed = () => {
-    navigation.navigate("Home");
+  const onSendPressed = async () => {
+    try {
+      await Auth.forgotPasswordSubmit(email, code, password);
+      Alert.alert("Enhorabuena", "Contraseña cambiada");
+      navigation.navigate("Home");
+    } catch (error) {
+      Alert.alert("Este correo no está registrado o el codigo es inválido");
+    }
   };
   const onLoginPressed = () => {
     navigation.navigate("Login");
@@ -22,6 +30,13 @@ const NewPasswordScreen = ({ navigation }) => {
         <View style={styles.register}>
           <Text style={styles.header_title}>Resetear contraseña</Text>
 
+          <CustomTitleInput textValue="Correo electrónico" />
+          <CustomInput
+            value={email}
+            setValue={setEmail}
+            placeholder="Ingrese su correo electrónico"
+          />
+
           <CustomTitleInput textValue="Código" />
           <CustomInput
             value={code}
@@ -31,8 +46,8 @@ const NewPasswordScreen = ({ navigation }) => {
 
           <CustomTitleInput textValue="Contraseña nueva" />
           <CustomInput
-            value={newPassword}
-            setValue={setNewPassword}
+            value={password}
+            setValue={setPassword}
             placeholder="Ingrese su nueva contraseña"
           />
 

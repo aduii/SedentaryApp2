@@ -4,9 +4,10 @@
     "slug": "SedentaryApp2",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    
+    "icon": "./assets/images/logo_1.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo_1.png",
         "backgroundColor": "#FFFFFF"
       }
     },
