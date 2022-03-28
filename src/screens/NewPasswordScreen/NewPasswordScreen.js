@@ -15,7 +15,7 @@ const NewPasswordScreen = ({ navigation }) => {
     try {
       await Auth.forgotPasswordSubmit(email, code, password);
       Alert.alert("Enhorabuena", "Contraseña cambiada");
-      navigation.navigate("Home");
+      navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Este correo no está registrado o el codigo es inválido");
     }
@@ -49,6 +49,7 @@ const NewPasswordScreen = ({ navigation }) => {
             value={password}
             setValue={setPassword}
             placeholder="Ingrese su nueva contraseña"
+            secureTextEntry={true}
           />
 
           <CustomButton

@@ -11,7 +11,6 @@ const SignupScreen = ({ navigation }) => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
   const [tall, setTall] = useState("");
   const [weight, setWeight] = useState("");
   const [date, setDate] = useState("");
@@ -63,13 +62,6 @@ const SignupScreen = ({ navigation }) => {
           <CustomInput
             value={password}
             setValue={setPassword}
-            placeholder="**************"
-            secureTextEntry={true}
-          />
-          <CustomTitleInput textValue="Repetir contraseña" />
-          <CustomInput
-            value={repeatPassword}
-            setValue={setRepeatPassword}
             placeholder="**************"
             secureTextEntry={true}
           />
