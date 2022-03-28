@@ -5,11 +5,14 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
 
-const ForgotPasswordScreen = () => {
+const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
 
   const onSendPressed = () => {
-    console.warn("On Send Pressed");
+    navigation.navigate("NewPassword");
+  };
+  const onLoginPressed = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -25,6 +28,11 @@ const ForgotPasswordScreen = () => {
           />
 
           <CustomButton onPress={onSendPressed} text="Enviar" type="primary" />
+          <CustomButton
+            onPress={onLoginPressed}
+            text="Volver a Login"
+            type="secondary"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

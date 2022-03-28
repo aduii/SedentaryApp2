@@ -6,7 +6,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
 import CustomDatePicker from "../../components/CustomDatePicker";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,10 @@ const SignupScreen = () => {
   const [date, setDate] = useState("");
 
   const onCreateAccountPressed = () => {
-    console.warn("On Create Account");
+    navigation.navigate("ConfirmEmail");
+  };
+  const onLoginPressed = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -82,6 +85,11 @@ const SignupScreen = () => {
             onPress={onCreateAccountPressed}
             text="Registrarme"
             type="primary"
+          />
+          <CustomButton
+            onPress={onLoginPressed}
+            text="Volver a Login"
+            type="secondary"
           />
         </View>
       </ScrollView>

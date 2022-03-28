@@ -5,12 +5,15 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
 
-const NewPasswordScreen = () => {
+const NewPasswordScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   const onSendPressed = () => {
-    console.warn("On Send Pressed");
+    navigation.navigate("Home");
+  };
+  const onLoginPressed = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -37,6 +40,11 @@ const NewPasswordScreen = () => {
             onPress={onSendPressed}
             text="Confirmar"
             type="primary"
+          />
+          <CustomButton
+            onPress={onLoginPressed}
+            text="Volver a Login"
+            type="secondary"
           />
         </View>
       </ScrollView>

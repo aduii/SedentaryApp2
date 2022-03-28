@@ -11,18 +11,19 @@ import Logo from "../../../assets/images/logo_1.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { height } = useWindowDimensions();
   const onLoginPressed = () => {
-    console.warn("Login");
+    // console.warn("Login");
+    navigation.navigate("Home");
   };
   const onForgotPasswordPressed = () => {
-    console.warn("Forgot your password");
+    navigation.navigate("ForgotPassword");
   };
   const onRegisterPressed = () => {
-    console.warn("On Register");
+    navigation.navigate("Signup");
   };
 
   return (

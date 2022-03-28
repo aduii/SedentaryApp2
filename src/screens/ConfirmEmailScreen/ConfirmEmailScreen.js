@@ -4,11 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
-const ConfirmEmailScreen = () => {
+const ConfirmEmailScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
 
   const onConfirmPressed = () => {
-    console.warn("On Confirm Pressed");
+    navigation.navigate("Home");
+  };
+  const onLoginPressed = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -27,6 +30,11 @@ const ConfirmEmailScreen = () => {
             onPress={onConfirmPressed}
             text="Confirmar"
             type="primary"
+          />
+          <CustomButton
+            onPress={onLoginPressed}
+            text="Volver a Login"
+            type="secondary"
           />
         </View>
       </ScrollView>
