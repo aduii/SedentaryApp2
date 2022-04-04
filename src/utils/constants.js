@@ -1,0 +1,1 @@
+export const API_HOST="https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey="

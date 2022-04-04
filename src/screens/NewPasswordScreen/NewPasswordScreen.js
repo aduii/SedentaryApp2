@@ -4,16 +4,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
+import { useForm } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 
-const NewPasswordScreen = ({ navigation }) => {
-  const [code, setCode] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onSendPressed = async () => {
+const NewPasswordScreen = () => {
+  const { control, handleSubmit } = useForm();
+  const navigation = useNavigation();
+  const onSendPressed = async (data) => {
     try {
-      await Auth.forgotPasswordSubmit(email, code, password);
+      await Auth.forgotPasswordSubmit(data.email, data.code, data.password);
       Alert.alert("Enhorabuena", "Contraseña cambiada");
       navigation.navigate("Login");
     } catch (error) {
@@ -32,28 +32,41 @@ const NewPasswordScreen = ({ navigation }) => {
 
           <CustomTitleInput textValue="Correo electrónico" />
           <CustomInput
-            value={email}
-            setValue={setEmail}
+            name="email"
+            control={control}
+            rules={{
+              required: "Correo electrónico obligatorio",
+            }}
             placeholder="Ingrese su correo electrónico"
           />
 
           <CustomTitleInput textValue="Código" />
           <CustomInput
-            value={code}
-            setValue={setCode}
+            name="code"
+            control={control}
+            rules={{
+              required: "Código obligatorio",
+            }}
             placeholder="Ingrese el código enviado al correo electrónico"
           />
 
           <CustomTitleInput textValue="Contraseña nueva" />
           <CustomInput
-            value={password}
-            setValue={setPassword}
+            name="password"
+            control={control}
+            rules={{
+              required: "Contraseña obligatorio",
+              minLength: {
+                value: 7,
+                message: "7 caracteres como mínimo",
+              },
+            }}
             placeholder="Ingrese su nueva contraseña"
             secureTextEntry={true}
           />
 
           <CustomButton
-            onPress={onSendPressed}
+            onPress={handleSubmit(onSendPressed)}
             text="Confirmar"
             type="primary"
           />

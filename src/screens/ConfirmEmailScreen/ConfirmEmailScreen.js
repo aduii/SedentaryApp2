@@ -4,15 +4,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
+import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 
-const ConfirmEmailScreen = ({ navigation }) => {
-  const [code, setCode] = useState("");
-  const [email, setEmail] = useState("");
+const ConfirmEmailScreen = () => {
+  const route = useRoute();
 
-  const onConfirmPressed = async () => {
+  const { control, handleSubmit } = useForm();
+  const navigation = useNavigation();
+
+  const onConfirmPressed = async (data) => {
     try {
-      const response = await Auth.confirmSignUp(email, code);
+      await Auth.confirmSignUp(data.email, data.code);
       Alert.alert("Enhorabuena", "Se registró con éxito su correo");
       navigation.navigate("Login");
     } catch (e) {
@@ -29,22 +34,22 @@ const ConfirmEmailScreen = ({ navigation }) => {
         <View style={styles.register}>
           <Text style={styles.header_title}>Confirma tu correo</Text>
 
-          <CustomTitleInput textValue="Email" />
+          <CustomTitleInput textValue="Correo electrónico" />
           <CustomInput
-            value={email}
-            setValue={setEmail}
+            name="email"
+            control={control}
             placeholder="Ingrese su correo electrónico"
           />
 
           <CustomTitleInput textValue="Código" />
           <CustomInput
-            value={code}
-            setValue={setCode}
+            name="code"
+            control={control}
             placeholder="Ingrese su código de confirmación"
           />
 
           <CustomButton
-            onPress={onConfirmPressed}
+            onPress={handleSubmit(onConfirmPressed)}
             text="Confirmar"
             type="primary"
           />

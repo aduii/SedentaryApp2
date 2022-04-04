@@ -5,20 +5,23 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
 import CustomDatePicker from "../../components/CustomDatePicker";
+import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import { useForm } from "react-hook-form";
 
-const SignupScreen = ({ navigation }) => {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [tall, setTall] = useState("");
-  const [weight, setWeight] = useState("");
-  const [date, setDate] = useState("");
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  const onCreateAccountPressed = async () => {
-    // navigation.navigate("ConfirmEmail");
+const SignupScreen = () => {
+  const { control, handleSubmit, watch } = useForm();
+  const pass = watch("password");
+
+  const navigation = useNavigation();
+
+  const onCreateAccountPressed = async (data) => {
+    const { email, password, username, date, tall, weight } = data;
     try {
-      const response = await Auth.signUp({
+      await Auth.signUp({
         username: email,
         password,
         attributes: {
@@ -44,44 +47,86 @@ const SignupScreen = ({ navigation }) => {
         <View style={styles.register}>
           <Text style={styles.header_title}>Registro</Text>
 
-          <CustomTitleInput textValue="Nombres Completos" />
+          <CustomTitleInput textValue="Nombres completos" />
           <CustomInput
-            value={username}
-            setValue={setUserName}
+            name="username"
             placeholder="César Flores"
+            rules={{ required: "Nombres completos obligatorio" }}
+            control={control}
           />
 
           <CustomTitleInput textValue="Correo electrónico" />
           <CustomInput
-            value={email}
-            setValue={setEmail}
+            name="email"
             placeholder="cesar.flores@upc.edu.pe"
+            rules={{
+              required: "Correo electrónico obligatorio",
+              pattern: {
+                value: EMAIL_REGEX,
+                message: "Correo electrónico inválido",
+              },
+            }}
+            control={control}
           />
 
           <CustomTitleInput textValue="Contraseña" />
           <CustomInput
-            value={password}
-            setValue={setPassword}
-            placeholder="**************"
+            name="password"
+            placeholder="7 caracteres min."
+            rules={{
+              required: "Contraseña obligatorio",
+              minLength: {
+                value: 7,
+                message: "7 caracteres como mínimo",
+              },
+            }}
+            control={control}
+            secureTextEntry={true}
+          />
+
+          <CustomTitleInput textValue="Repite la contraseña" />
+          <CustomInput
+            name="password_repeat"
+            placeholder="Repite la contraseña"
+            rules={{
+              required: "Repite la contraseña obligatorio",
+              validate: (value) =>
+                value === pass || "No coincide con la contraseña",
+            }}
+            control={control}
             secureTextEntry={true}
           />
 
           <CustomTitleInput textValue="Fecha de nacimiento" />
-          <CustomDatePicker date={date} setDate={setDate} />
+          <CustomDatePicker
+            name="date"
+            control={control}
+            rules={{ required: "Fecha de nacimiento obligatorio" }}
+          />
 
           <CustomTitleInput textValue="Altura (metros)" />
           <CustomInput
-            value={tall}
-            setValue={setTall}
-            placeholder="1.70"
+            name="tall"
+            control={control}
+            rules={{
+              required: "Talla obligatorio",
+              validate: (value) =>
+                (value >= 1 && value <= 3) || "Talla incorrecta",
+            }}
+            placeholder="Entre 1 - 3"
             kbType="numeric"
           />
 
           <CustomTitleInput textValue="Peso (kg)" />
           <CustomInput
-            value={weight}
-            setValue={setWeight}
-            placeholder="60"
+            name="weight"
+            control={control}
+            rules={{
+              required: "Peso obligatorio",
+              validate: (value) =>
+                (value >= 1 && value <= 200) || "Peso incorrecto",
+            }}
+            placeholder="Entre 1 - 200"
             kbType="numeric"
           />
 
@@ -91,7 +136,7 @@ const SignupScreen = ({ navigation }) => {
             <Text style={styles.link}>Política de privacidad</Text>
           </Text>
           <CustomButton
-            onPress={onCreateAccountPressed}
+            onPress={handleSubmit(onCreateAccountPressed)}
             text="Registrarme"
             type="primary"
           />

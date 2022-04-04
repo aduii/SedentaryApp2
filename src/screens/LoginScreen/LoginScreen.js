@@ -11,23 +11,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../assets/images/logo_1.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import { useForm } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginScreen = () => {
   const { height } = useWindowDimensions();
+  const { control, handleSubmit } = useForm();
+  const navigation = useNavigation();
 
-  // const onLoginPressed = () => {
-  //   // console.warn("Login");
-  //   // navigation.navigate("Home");
-  // };
-  const onLoginPressed = async () => {
+  const onLoginPressed = async (data) => {
     try {
-      const response = await Auth.signIn(email, password);
+      const response = await Auth.signIn(data.email, data.password);
       navigation.navigate("Home");
     } catch (e) {
-      Alert.alert("Intente de nuevo", e.message);
+      Alert.alert("Intente de nuevo", "Correo o contraseña incorrecto");
     }
   };
   const onForgotPasswordPressed = () => {
@@ -48,17 +46,25 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <View style={styles.login}>
         <CustomInput
-          value={email}
-          setValue={setEmail}
+          name="email"
           placeholder="Correo electrónico"
+          control={control}
+          rules={{ required: "Email es obligatorio" }}
         />
         <CustomInput
-          value={password}
-          setValue={setPassword}
+          name="password"
           placeholder="Contraseña"
+          control={control}
+          rules={{ required: "Contraseña obligatorio" }}
           secureTextEntry={true}
         />
-        <CustomButton onPress={onLoginPressed} text="Ingresar" type="primary" />
+
+        <CustomButton
+          onPress={handleSubmit(onLoginPressed)}
+          text="Ingresar"
+          type="primary"
+        />
+
         <CustomButton
           onPress={onForgotPasswordPressed}
           text="¿Olvidaste tu contraseña?"

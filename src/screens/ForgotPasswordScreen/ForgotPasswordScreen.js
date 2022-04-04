@@ -4,14 +4,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomTitleInput from "../../components/CustomTitleInput/CustomTitleInput";
+import { useForm } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
+
 import { Auth } from "aws-amplify";
 
-const ForgotPasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+const ForgotPasswordScreen = () => {
+  const { control, handleSubmit } = useForm();
+  const navigation = useNavigation();
 
-  const onSendPressed = async () => {
+  const onSendPressed = async (data) => {
     try {
-      await Auth.forgotPassword(email);
+      await Auth.forgotPassword(data.email);
       navigation.navigate("NewPassword");
     } catch (e) {
       Alert.alert("Este correo no está registrado", e.message);
@@ -28,12 +32,19 @@ const ForgotPasswordScreen = ({ navigation }) => {
           <Text style={styles.header_title}>Recuperar contraseña</Text>
           <CustomTitleInput textValue="Correo electrónico" />
           <CustomInput
-            value={email}
-            setValue={setEmail}
+            name="email"
+            control={control}
+            rules={{
+              required: "Correo electrónico obligatorio",
+            }}
             placeholder="Ingrese su correo electrónico"
           />
 
-          <CustomButton onPress={onSendPressed} text="Enviar" type="primary" />
+          <CustomButton
+            onPress={handleSubmit(onSendPressed)}
+            text="Enviar"
+            type="primary"
+          />
           <CustomButton
             onPress={onLoginPressed}
             text="Volver a Login"

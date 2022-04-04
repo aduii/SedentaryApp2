@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package":"aduiicode.sedentaryapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo_1.png",
         "backgroundColor": "#FFFFFF"

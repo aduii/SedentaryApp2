@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import DatePicker from "react-native-datepicker";
-import { StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
+import { Controller } from "react-hook-form";
 
-const CustomDatePicker = ({ date, setDate }) => {
+const CustomDatePicker = ({ control, name, rules = {} }) => {
   let nowDate = new Date();
 
   let strNowDate =
@@ -13,29 +14,48 @@ const CustomDatePicker = ({ date, setDate }) => {
     nowDate.getFullYear();
 
   return (
-    <DatePicker
-      style={styles.datepicker}
-      date={date}
-      mode="date"
-      placeholder="Seleccione su fecha de nacimiento"
-      format="DD-MM-YYYY"
-      minDate="01-01-1960"
-      maxDate={strNowDate}
-      confirmBtnText="Confirm"
-      cancelBtnText="Cancel"
-      showIcon={false}
-      androidMode="spinner"
-      customStyles={{
-        dateInput: {
-          margin: 0,
-          padding: 5,
-          borderWidth: 0,
-          alignItems: "flex-start",
-        },
-      }}
-      onDateChange={(date) => {
-        setDate(date);
-      }}
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({
+        field: { value, onChange, onBlur },
+        fieldState: { error },
+      }) => (
+        <>
+          <DatePicker
+            style={[
+              styles.datepicker,
+              { borderColor: error ? "red" : "#AED6F1" },
+            ]}
+            date={value}
+            mode="date"
+            placeholder="Seleccione su fecha de nacimiento"
+            format="DD-MM-YYYY"
+            minDate="01-01-1960"
+            maxDate={strNowDate}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            showIcon={false}
+            androidMode="spinner"
+            onBlur={onBlur}
+            customStyles={{
+              dateInput: {
+                margin: 0,
+                padding: 5,
+                borderWidth: 0,
+                alignItems: "flex-start",
+              },
+            }}
+            onDateChange={onChange}
+          />
+          {error && (
+            <Text style={{ color: "red", alignSelf: "stretch" }}>
+              {error.message || "Error"}
+            </Text>
+          )}
+        </>
+      )}
     />
   );
 };
