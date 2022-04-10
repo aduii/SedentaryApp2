@@ -37,11 +37,15 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 100,
     padding: 5,
-    borderWidth: 2,
     borderRadius: 5,
     backgroundColor: "#AED6F1",
-    borderColor: "blue",
     marginVertical: 5,
+    marginHorizontal: 5,
+    //Shadow Effect
+    shadowColor: "#470000",
+    shadowOffset: { width: 0.5, height: 1 },
+    shadowOpacity: 0.1,
+    elevation: 5,
   },
   image: {
     resizeMode: "stretch",
