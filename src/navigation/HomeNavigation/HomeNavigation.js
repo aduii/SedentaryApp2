@@ -4,14 +4,13 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import React from "react";
 import NewsScreen from "../../screens/NewsScreen";
 import AssistantScreen from "../../screens/AssistantScreen";
-import Knowledge from "../../screens/KnowledgeScreen";
 import KnowledgeScreen from "../../screens/KnowledgeScreen";
 
 const Tab = createBottomTabNavigator();
 
 const HomeNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: true }}>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="News"
         component={NewsScreen}
@@ -40,7 +39,7 @@ const HomeNavigation = () => {
         name="Knowledge"
         component={KnowledgeScreen}
         options={{
-          tabBarLabel: "Conocimientos",
+          tabBarLabel: "Cuestionario",
           tabBarIcon: ({ color, size }) => (
             <Icon name="edit" color={color} size={size} />
           ),
