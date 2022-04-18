@@ -5,6 +5,7 @@ import React from "react";
 import NewsScreen from "../../screens/NewsScreen";
 import AssistantScreen from "../../screens/AssistantScreen";
 import KnowledgeScreen from "../../screens/KnowledgeScreen";
+import StepsScreen from "../../screens/StepsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +43,16 @@ const HomeNavigation = () => {
           tabBarLabel: "Cuestionario",
           tabBarIcon: ({ color, size }) => (
             <Icon name="edit" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Steps"
+        component={StepsScreen}
+        options={{
+          tabBarLabel: "Pasos",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="faBiking" color={color} size={size} />
           ),
         }}
       />

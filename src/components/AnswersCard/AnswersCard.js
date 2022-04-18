@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     fontSize: 16,
   },
+  checkbox: {
+    alignSelf: "center",
+  },
 });
 
 export default AnswersCard;
