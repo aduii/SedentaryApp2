@@ -22,20 +22,6 @@ const HomeNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Assistant"
-        component={AssistantScreen}
-        options={{
-          tabBarLabel: "Asistente Virtual",
-          tabBarIcon: ({ color, size }) => (
-            <Icon
-              name="assistive-listening-systems"
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Knowledge"
         component={KnowledgeScreen}
         options={{
