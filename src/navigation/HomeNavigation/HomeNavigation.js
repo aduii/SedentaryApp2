@@ -38,7 +38,7 @@ const HomeNavigation = () => {
         options={{
           tabBarLabel: "Pasos",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="faBiking" color={color} size={size} />
+            <Icon name="running" color={color} size={size} />
           ),
         }}
       />
