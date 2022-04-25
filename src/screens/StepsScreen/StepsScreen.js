@@ -21,6 +21,14 @@ const StepsScreen = () => {
       },
     ],
   };
+  const data3 = {
+    labels: ["15-04-22", "16-04-22", "17-04-22", "18-04-22", "19-04-22"],
+    datasets: [
+      {
+        data: [31.4475, 53.025, 160.125, 148.05, 107.94],
+      },
+    ],
+  };
   const chartConfig = {
     backgroundGradientFrom: "#fb8c00",
     backgroundGradientFromOpacity: 0,
@@ -57,6 +65,21 @@ const StepsScreen = () => {
           paddingVertical: 5,
         }}
         data={data2}
+        width={screenWidth * 0.95}
+        height={220}
+        yAxisLabel=""
+        chartConfig={chartConfig}
+        showValuesOnTopOfBars={true}
+        // verticalLabelRotation={30}
+      />
+      <Text style={styles.title}>Calorías</Text>
+      <BarChart
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+          paddingVertical: 5,
+        }}
+        data={data3}
         width={screenWidth * 0.95}
         height={220}
         yAxisLabel=""
